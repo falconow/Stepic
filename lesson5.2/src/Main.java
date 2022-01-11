@@ -4,24 +4,30 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-        InputStream inputStream2 = new ByteArrayInputStream(new byte[] {65,13,10,23,13,10,13});
+        InputStream inputStream2 = new ByteArrayInputStream(new byte[] {65,13,23,13,10,13});
         System.setIn(inputStream2);
         InputStream inputStream = System.in;
         OutputStream outputStream =System.out;
 
         int read = inputStream.read();
         while (read>=0) {
-            int next = inputStream.read();
-            if (read !=13 && next !=10) {
-                System.out.println(read);
-                System.out.println(next);
+            if (read==13) {
+                int read2 = inputStream.read();
+                if (read==13 && read2==10) {
+                    //System.out.println(10);
+                    outputStream.write(10);
+                } else {
+                    outputStream.write(read);
+                    if (read2>0) {
+                        outputStream.write(read2);
+                    };
+                }
             } else {
-                System.out.println(10);
+                outputStream.write(read);
             }
             read = inputStream.read();
         }
-
-        //System.out.flush();
+        System.out.flush();
     }
 
 
