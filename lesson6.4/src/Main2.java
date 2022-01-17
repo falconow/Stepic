@@ -1,19 +1,11 @@
-import jdk.nashorn.internal.runtime.regexp.joni.encoding.CharacterType;
-
-import javax.xml.stream.events.Characters;
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
-import java.util.function.Function;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 public class Main2 {
-
+    //Задача 3
     public static void main(String[] args) throws IOException {
         Map<String,Integer> map = new HashMap<>();
         Reader reader = new InputStreamReader(System.in,StandardCharsets.UTF_8);
@@ -26,23 +18,14 @@ public class Main2 {
         }
         scanner.close();
 
-
-
         map.entrySet().stream()
-                .sorted(Comparator.comparingInt(Map.Entry::getValue))
-                .forEach(x->System.out.println(x));
-
-
-
-
-
-
-
-
-
-
-
-
-
+                .sorted((x,y) -> {
+                    int result;
+                    result = y.getValue() - x.getValue();
+                    result = result == 0 ? x.getKey().compareTo(y.getKey()):result;
+                    return result;
+                })
+                .limit(10)
+               .forEach(x->System.out.println(x.getKey()));
     }
 }
